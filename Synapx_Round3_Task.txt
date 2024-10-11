@@ -1,86 +1,38 @@
 function main(workbook: ExcelScript.Workbook) {
-
-  let sheet13 = workbook.addWorksheet();
   let selectedSheet = workbook.getActiveWorksheet();
-  sheet13.getRange("A1").copyFrom(selectedSheet.getRange("A:E"), ExcelScript.RangeCopyType.all, false, false);
-  sheet13.setName("Output");
-  let output = workbook.getWorksheet("Output");
+  let output = workbook.addWorksheet("Output");
+
+  // Copy range and set filters
+  output.getRange("A1:E1").copyFrom(selectedSheet.getRange("A1:E1"));
+  output.getRange("A2:E51").copyFrom(selectedSheet.getRange("A2:E51"));
   output.getAutoFilter().apply(output.getRange("A:E"), 4, {
     filterOn: ExcelScript.FilterOn.custom,
     criterion1: ">=" + new Date("2024-01-01").toISOString().split("T")[0]
   });
 
+  // Highlight cells
   output.getRange("A33:E51").getFormat().getFill().setColor("#ffff00");
   output.getAutoFilter().clearCriteria();
-  output.getRange("F1").getFormat().getRangeBorder(ExcelScript.BorderIndex.diagonalDown).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("F1").getFormat().getRangeBorder(ExcelScript.BorderIndex.diagonalUp).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("F1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeLeft).setStyle(ExcelScript.BorderLineStyle.continuous);
-  output.getRange("F1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeLeft).setWeight(ExcelScript.BorderWeight.thin);
-  output.getRange("F1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeTop).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("F1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeBottom).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("F1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeRight).setStyle(ExcelScript.BorderLineStyle.continuous);
-  output.getRange("F1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeRight).setWeight(ExcelScript.BorderWeight.thin);
-  output.getRange("F1").getFormat().getRangeBorder(ExcelScript.BorderIndex.insideVertical).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("F1").getFormat().getRangeBorder(ExcelScript.BorderIndex.insideHorizontal).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("F1").getFormat().setHorizontalAlignment(ExcelScript.HorizontalAlignment.center);
-  output.getRange("F1").getFormat().setIndentLevel(0);
-  output.getRange("F1").getFormat().setVerticalAlignment(ExcelScript.VerticalAlignment.top);
-  output.getRange("F1").getFormat().setIndentLevel(0);
-  output.getRange("F1").getFormat().setWrapText(false);
-  output.getRange("F1").getFormat().setTextOrientation(0);
+
+  // Column F: Quantity Sold1
   output.getRange("F1").setValue("Quantity Sold1");
+  output.getRange("F2:F51").setFormula("=IF(C2=0, B1, C2)");
   output.getRange("F:F").getFormat().autofitColumns();
-  output.getRange("F2").setFormula("=IF(C2=0, B1, C2)");
-  output.getRange("F2").autoFill("F2:F51", ExcelScript.AutoFillType.fillDefault);
-  output.getRange("G1").getFormat().getFill().clear();
-  output.getRange("G1").getFormat().getRangeBorder(ExcelScript.BorderIndex.diagonalDown).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("G1").getFormat().getRangeBorder(ExcelScript.BorderIndex.diagonalUp).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("G1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeLeft).setStyle(ExcelScript.BorderLineStyle.continuous);
-  output.getRange("G1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeLeft).setWeight(ExcelScript.BorderWeight.thin);
-  output.getRange("G1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeTop).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("G1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeBottom).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("G1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeRight).setStyle(ExcelScript.BorderLineStyle.continuous);
-  output.getRange("G1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeRight).setWeight(ExcelScript.BorderWeight.thin);
-  output.getRange("G1").getFormat().getRangeBorder(ExcelScript.BorderIndex.insideVertical).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("G1").getFormat().getRangeBorder(ExcelScript.BorderIndex.insideHorizontal).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("G1").getFormat().setHorizontalAlignment(ExcelScript.HorizontalAlignment.center);
-  output.getRange("G1").getFormat().setIndentLevel(0);
 
-  output.getRange("G1").getFormat().setVerticalAlignment(ExcelScript.VerticalAlignment.top);
-  output.getRange("G1").getFormat().setIndentLevel(0);
-  output.getRange("G1").getFormat().setWrapText(false);
-
-  output.getRange("G1").getFormat().setTextOrientation(0);
+  // Column G: Gross Profit
   output.getRange("G1").setValue("Gross Profit");
+  output.getRange("G2:G51").setFormula("=B2*F2");
   output.getRange("G:G").getFormat().autofitColumns();
-  output.getRange("G2").setFormula("=B2*F2");
-  output.getRange("G2").autoFill("G2:G51", ExcelScript.AutoFillType.fillDefault);
-  output.getRange("H1").getFormat().getFill().clear();
-  output.getRange("H1").getFormat().getRangeBorder(ExcelScript.BorderIndex.diagonalDown).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("H1").getFormat().getRangeBorder(ExcelScript.BorderIndex.diagonalUp).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("H1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeLeft).setStyle(ExcelScript.BorderLineStyle.continuous);
-  output.getRange("H1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeLeft).setWeight(ExcelScript.BorderWeight.thin);
-  output.getRange("H1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeTop).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("H1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeBottom).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("H1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeRight).setStyle(ExcelScript.BorderLineStyle.continuous);
-  output.getRange("H1").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeRight).setWeight(ExcelScript.BorderWeight.thin);
-  output.getRange("H1").getFormat().getRangeBorder(ExcelScript.BorderIndex.insideVertical).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("H1").getFormat().getRangeBorder(ExcelScript.BorderIndex.insideHorizontal).setStyle(ExcelScript.BorderLineStyle.none);
-  output.getRange("H1").getFormat().setHorizontalAlignment(ExcelScript.HorizontalAlignment.center);
-  output.getRange("H1").getFormat().setIndentLevel(0);
 
-  output.getRange("H1").getFormat().setVerticalAlignment(ExcelScript.VerticalAlignment.top);
-  output.getRange("H1").getFormat().setIndentLevel(0);
-  output.getRange("H1").getFormat().setWrapText(false);
-  output.getRange("H1").getFormat().setTextOrientation(0);
+  // Column H: Final Gross Profit
   output.getRange("H1").setValue("Final Gross Profit");
+  output.getRange("H2:H51").setFormula("=IF(F2 > 15, G2 * 0.9, G2)");
   output.getRange("H:H").getFormat().autofitColumns();
-  output.getRange("H2").setFormula("=IF(F2 > 15, G2 * 0.9, G2)");
-  output.getRange("H2").autoFill("H2:H51", ExcelScript.AutoFillType.fillDefault);
 
-  output.getAutoFilter().apply(output.getAutoFilter().getRange(), 3, { filterOn: ExcelScript.FilterOn.values, values: ["West"] });
+  // Apply filter for "West" region
+  output.getAutoFilter().apply(output.getRange("A:E"), 3, { filterOn: ExcelScript.FilterOn.values, values: ["West"] });
+
   let west_Region = workbook.addWorksheet("West Region");
-  let sheet27 = west_Region;
 
   let range = output.getRange("A:F");
 
@@ -89,20 +41,308 @@ function main(workbook: ExcelScript.Workbook) {
 
   let targetRow = 0;
   for (let i = 0; i < rowCount; i++) {
-    if (!range.getRow(i).getHidden()) {  
+    if (!range.getRow(i).getHidden()) {
       for (let j = 0; j < columnCount; j++) {
         if (!range.getColumn(j).getHidden()) {
           let value = range.getCell(i, j).getValue();
-          sheet27.getCell(targetRow, j).setValue(value);
+          west_Region.getCell(targetRow, j).setValue(value);
         }
       }
-      targetRow++; 
+      targetRow++;
     }
   }
   west_Region.getRange("C:E").delete(ExcelScript.DeleteShiftDirection.left);
   west_Region.getRange("C1").setValue("Quantity Sold");
-
 }
+----------------------------------------------------------------------------------- PRACTICE
+selectedSheet.getRange("A3:C3").getFormat().getFill().setColor("yellow");
+    
+let table = selectedSheet.getTable("Table1");
+table.addRow(0, [1, 2, 3,4,5]);                         -------------------variable table
+table.getSort().apply([{ key: 0, ascending: true }]);
+
+selectedSheet.getUsedRange().getFormat().autofitColumns();
+
+let positiveValue = Math.abs(range.getValue() as number);
+range.setValue(positiveValue);
+
+let dataRange = table.getRangeBetweenHeaderAndTotal();
+
+dataRange.getFormat().getFill().setColor("yellow");
+
+let dateColumn = table.getColumn(5).getFilter().applyCustomFilter(">=2024-01-01");
+
+let c = selectedSheet.copy(ExcelScript.WorksheetPositionType.after, selectedSheet).setName("Output");
+    output.getRange().copyFrom(table.getRange())
+
+--------------------------------------------------------------------------------------------ROUND2
+
+function main(workbook: ExcelScript.Workbook) {
+    let selectedSheet = workbook.getActiveWorksheet();
+    let table = selectedSheet.getTable("Table1");
+    let dateColumn = table.getColumn(5).getFilter().applyCustomFilter(">=2024-01-01");
+    table.getRangeBetweenHeaderAndTotal().getFormat().getFill().setColor("yellow");
+    table.clearFilters();
+    let output = workbook.addWorksheet("Output");
+    output.getRange().copyFrom(table.getRange())
+
+    let outputtable = output.getTables()[0];
+    let rowCount = outputtable.getRowCount();
+
+    let quantityColumn = outputtable.getColumnByName("Quantity Sold");
+    let priceColumn = outputtable.getColumnByName("Price");
+
+    for (let i = 0; i < rowCount; i++) {
+        let quantityValue = quantityColumn.getRange().getValues()[i][0];
+         
+        if (quantityValue === 0 && i>=2) {
+            let priceValue = priceColumn.getRange().getValues()[i - 1][0];
+            quantityColumn.getRange().getCell(i, 0).setValue(priceValue);
+        }
+    }
+    output.getRange("E:E").insert(ExcelScript.InsertShiftDirection.right);
+    outputtable.getColumnByName("Column1").setName("Gross")
+    const totalColumn = outputtable.getColumnByName("Gross");
+
+    const Name1 = outputtable.getColumns()[totalColumn.getIndex() - 3].getName();
+    const Name2 = outputtable.getColumns()[totalColumn.getIndex() - 2].getName();
+
+    totalColumn.getRangeBetweenHeaderAndTotal().setFormula(
+        `=[@[${Name1}]]*[@[${Name2}]]`
+    );
+    
+    outputtable.getColumn(4).getFilter().applyValuesFilter(["West"]); 
+
+    let west_region = workbook.addWorksheet("West Region");
+    west_region.getRange().copyFrom(output.getRange())
+    west_region.getTables()[0].getColumnByName("Region").delete();
+    west_region.getTables()[0].getColumnByName("Gross").delete();
+    west_region.getTables()[0].getColumnByName("Date").delete();
+}
+
+
+----------------------------------------------------------------------------------------------
+// Get the values of the used range.
+let range = selectedSheet.getUsedRange();
+let rangeValues = range.getValues();
+
+// Iterate over the fourth and fifth columns and set their values to their absolute value.
+let rowCount = range.getRowCount();
+for (let i = 1; i < rowCount; i++) {
+    // The column at index 3 is column "4" in the worksheet.
+    if (rangeValues[i][3] != 0) {
+        let positiveValue = Math.abs(rangeValues[i][3] as number);
+        selectedSheet.getCell(i, 3).setValue(positiveValue);
+    }
+
+    // The column at index 4 is column "5" in the worksheet.
+    if (rangeValues[i][4] != 0) {
+        let positiveValue = Math.abs(rangeValues[i][4] as number);
+        selectedSheet.getCell(i, 4).setValue(positiveValue);
+    }
+}
+
+----------------------------------------------------------------------------------------------
+  let dateRange = worksheet.getRange("A1");
+  let timeRange = worksheet.getRange("B1");
+
+  // Get the current date and time using the JavaScript Date object.
+  let date = new Date(Date.now());
+
+  // Add the date string to A1.
+  dateRange.setValue(date.toLocaleDateString());
+
+  // Add the time string to B1.
+  timeRange.setValue(date.toLocaleTimeString());
+----------------------------------------------------------------------------------------------
+  let newTable = workbook.addTable(emailsSheet.getRange("A1:D2"), true);
+  
+  let newTable = workbook.addTable(emailsSheet.getRange("A1:D2"), true);
+  newTable.setName("EmailTable");
+
+  // Add a new PivotTable to a new worksheet
+  let pivotWorksheet = workbook.addWorksheet("Subjects");
+  let newPivotTable = workbook.addPivotTable("Pivot", "EmailTable", pivotWorksheet.getRange("A3:C20"));
+
+  // Setup the pivot hierarchies
+  newPivotTable.addRowHierarchy(newPivotTable.getHierarchy("Day of the week"));
+  newPivotTable.addRowHierarchy(newPivotTable.getHierarchy("Email address"));
+  newPivotTable.addDataHierarchy(newPivotTable.getHierarchy("Subject"));
+----------------------------------------------------------------------------------------------
+// Get the first (and only) table in the worksheet.
+let table = worksheet.getTables()[0];
+
+let range = sheet.getRange("B1");
+range.setValues([["Hello World"]]);
+
+let range = sheet.getRange("A1:B3");
+range.setValues([
+  [1, 2],
+  [3, 4],
+  [5, 6]
+]);
+-------------------------------------------------------------------------------------------------
+// Look for the first row where today's date is between the row's start and end dates.
+let currentDate = new Date();
+for (let row = 0; row < tableValues.length; row++) {
+    let startDate = convertDate(tableValues[row][2] as number);
+    let endDate = convertDate(tableValues[row][3] as number);
+    if (startDate <= currentDate && endDate >= currentDate) {
+        // Return the first matching email address.
+        return tableValues[row][1].toString();
+    }
+}
+-------------------------------------------------------------------------------------------------
+  // Get the "Unit Price" column. 
+  // The result of calling getValues is declared to be a number[][] so that we can perform arithmetic operations.
+  let priceRange = sheet.getRange("D3:D5");
+  let prices = priceRange.getValues() as number[][];
+
+  // Get the average price.
+  let totalPrices = 0;
+  prices.forEach((price) => totalPrices += price[0]);
+  let averagePrice = totalPrices / prices.length;
+  console.log(averagePrice);
+---------------------------------------------------------------------------------------------------
+  // Get the table named "MyTable".
+  let myTable = workbook.getTable("MyTable");
+
+  // If the table is in the workbook, myTable will have a value.
+  // Otherwise, the variable will be undefined and go to the else clause.
+  if (myTable) {
+    let worksheetName = myTable.getWorksheet().getName();
+    console.log(`MyTable is on the ${worksheetName} worksheet`);
+  } else {
+    console.log(`MyTable is not in the workbook.`);
+  }
+-----------------------------------------------------------------------------------------------
+  // These tables must be in the workbook for the script.
+  const TargetTableName = 'Table1';
+  const SourceTableName = 'Table2';
+
+  // Get the table objects.
+  let targetTable = workbook.getTable(TargetTableName);
+  let sourceTable = workbook.getTable(SourceTableName);
+
+  // Check if the tables are there.
+  if (!targetTable || !sourceTable) {
+    // Immediately end the script with an error.
+    throw `Required tables missing - Check that both the source (${TargetTableName}) and target (${SourceTableName}) tables are present before running the script.`;
+  }
+-----------------------------------------------------------------------------------------------
+try {
+    range.setValues(someLargeValues);
+} catch (error) {
+    console.log(`The script failed to update the values at location ${range.getAddress()}. Please inspect and run again.`);
+    console.log(error);
+    return; // End the script (assuming this is in the main function).
+}
+-----------------------------------------------------------------------------------------------
+
+  const pivotTable = workbook.getPivotTables()[0];
+
+  // Get the names of each data column in the PivotTable.
+  const pivotColumnLabelRange = pivotTable.getLayout().getColumnLabelRange();
+
+  // Get the range displaying the pivoted data.
+  const pivotDataRange = pivotTable.getLayout().getBodyAndTotalRange();
+
+  // Get the range with the "grand totals" for the PivotTable columns.
+  const grandTotalRange = pivotDataRange.getLastRow();
+
+  // Print each of the "Grand Totals" to the console.
+  grandTotalRange.getValues()[0].forEach((column, columnIndex) => {
+    console.log(`Grand total of ${pivotColumnLabelRange.getValues()[0][columnIndex]}: ${grandTotalRange.getValues()[0][columnIndex]}`);
+    // Example log: "Grand total of Sum of Crates Sold Wholesale: 11000"
+  });
+
+-----------------------------------------------------------------------------------------------MATCHING IDS
+const a=table2.getRowCount()
+const b = table3.getRowCount();
+let c: (string | number | boolean)[] = [];
+
+ for (let i = 0; i < a; i++) {
+        for (let j = 0; j < b; j++) {
+            if (table2.getColumnByName("Customer_ID").getRange().getValues()[i][0] === table3.getColumnByName("Customer_ID").getRange().getValues()[j][0]){
+                c.push(table2.getColumnByName("Customer_ID").getRange().getValues()[i][0])
+            }
+        }
+    }
+------------------------------------------------------------------------------------------------Pivot table
+let table = table1;
+
+    // Get the range of the table
+    let tableRange = table.getRange();
+
+    // Add a new worksheet for the pivot table
+    let pivotSheet = workbook.addWorksheet("PivotTableSheet");
+
+    // Create the pivot table
+    let pivotTable = pivotSheet.addPivotTable("PivotTable", tableRange,"A1");
+
+    // Set the row field to "Product"
+    pivotTable.addRowHierarchy(pivotTable.getHierarchy("Product"));
+
+    // Set the values field to the sum of "Price"
+    let priceField = pivotTable.addDataHierarchy(pivotTable.getHierarchy("Price"));
+    priceField.setSummarizeBy(ExcelScript.AggregationFunction.sum);
+-----------------------------------------------------------------------------------------------null value check
+for (let i = 0; i < a; i++) {
+            if (table2.getColumnByName("Customer_ID").getRange().getValues()[i][0] === ''){
+                // console.log(1);
+                table2.getColumnByName("Customer_ID").getRange().getCell(i, 0).setValue(1)
+            }
+    }
+---------------------------------------------------------------------------------------------format text
+table2.getColumnByName("Customer_ID").getRange().setNumberFormatLocal("@")
+table5.getColumnById(4).getRange().setNumberFormatLocal("dd/mm/yyyy")
+------------------------------------------------------------------------------------------------add rows common from one to rest
+for (let i = 0; i < a; i++) {
+        for (let j = 0; j < b; j++) {
+            if (table2.getColumnByName("Customer_ID").getRange().getValues()[i][0] === table3.getColumnByName("Customer_ID").getRange().getValues()[j][0]) {
+                // console.log(table2.getRangeBetweenHeaderAndTotal().getValues()[i])
+                table5.addRow(-1,table2.getRangeBetweenHeaderAndTotal().getValues()[i])
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
